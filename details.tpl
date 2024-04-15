@@ -1,0 +1,16 @@
+[docker_servers]
+${master01}
+${master02}
+${master03}
+${worker01}
+${worker02}
+${worker03}
+[leader_server]
+${master01}
+[manager_servers]
+${master02}
+${master03}
+[worker_servers]
+${worker01}
+${worker02}
+${worker03}
