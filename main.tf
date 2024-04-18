@@ -1,7 +1,7 @@
 provider "aws" {
   region = "us-east-1"
 }
-resource "aws_vpc" "ansible_vpc" {
+resource "aws_vpc" "ansible1_vpc" {
   cidr_block           = "10.100.0.0/16"
   enable_dns_hostnames = true
   tags = {
@@ -9,57 +9,57 @@ resource "aws_vpc" "ansible_vpc" {
   }
 }
 
-resource "aws_subnet" "ansible_subnet-1" {
-  vpc_id                  = aws_vpc.ansible_vpc.id
+resource "aws_subnet" "ansible1_subnet-1" {
+  vpc_id                  = aws_vpc.ansible1_vpc.id
   cidr_block              = "10.100.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1a"
   tags = {
-    Name = "ansible-subnet-1"
+    Name = "ansible1-subnet-1"
   }
 }
 
-resource "aws_subnet" "ansible_subnet-2" {
-  vpc_id                  = aws_vpc.ansible_vpc.id
+resource "aws_subnet" "ansible1_subnet-2" {
+  vpc_id                  = aws_vpc.ansible1_vpc.id
   cidr_block              = "10.100.2.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1b"
   tags = {
-    Name = "ansible-subnet-2"
+    Name = "ansible1-subnet-2"
   }
 }
 
-resource "aws_internet_gateway" "ansible-IGW" {
-  vpc_id = aws_vpc.ansible_vpc.id
+resource "aws_internet_gateway" "ansible1-IGW" {
+  vpc_id = aws_vpc.ansible1_vpc.id
   tags = {
-    Name = "ansible-IGW"
+    Name = "ansible1-IGW"
   }
 }
 
-resource "aws_route_table" "ansible-route" {
-  vpc_id = aws_vpc.ansible_vpc.id
+resource "aws_route_table" "ansible1-route" {
+  vpc_id = aws_vpc.ansible1_vpc.id
   route {
-    gateway_id = aws_internet_gateway.ansible-IGW.id
+    gateway_id = aws_internet_gateway.ansible1-IGW.id
     cidr_block = "0.0.0.0/0"
   }
   tags = {
-    Name = "ansible-Public-Table"
+    Name = "ansible1-Public-Table"
   }
 
 }
 resource "aws_route_table_association" "route_table_1" {
-  route_table_id = aws_route_table.ansible-route.id
-  subnet_id      = aws_subnet.ansible_subnet-1.id
+  route_table_id = aws_route_table.ansible1-route.id
+  subnet_id      = aws_subnet.ansible1_subnet-1.id
 }
 resource "aws_route_table_association" "route_table_2" {
-  route_table_id = aws_route_table.ansible-route.id
-  subnet_id      = aws_subnet.ansible_subnet-2.id
+  route_table_id = aws_route_table.ansible1-route.id
+  subnet_id      = aws_subnet.ansible1_subnet-2.id
 }
 
 resource "aws_security_group" "allow_tls" {
   name        = "allow_all"
   description = "Allow all inbound traffic and all outbound traffic"
-  vpc_id      = aws_vpc.ansible_vpc.id
+  vpc_id      = aws_vpc.ansible1_vpc.id
 
   tags = {
     Name = "allow_tls"
