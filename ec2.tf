@@ -8,7 +8,7 @@ resource "aws_instance" "master-1" {
   ami                         = data.aws_ami.my_ami.id
   key_name                    = "terraform keypair"
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.ansible_subnet-1.id
+  subnet_id                   = aws_subnet.ansible1_subnet-1.id
   vpc_security_group_ids      = ["${aws_security_group.allow_tls.id}"]
   associate_public_ip_address = true
   tags = {
@@ -20,7 +20,7 @@ resource "aws_instance" "master-2" {
   ami                         = data.aws_ami.my_ami.id
   key_name                    = "terraform keypair"
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.ansible_subnet-2.id
+  subnet_id                   = aws_subnet.ansible1_subnet-2.id
   vpc_security_group_ids      = ["${aws_security_group.allow_tls.id}"]
   associate_public_ip_address = true
   tags = {
